@@ -1,6 +1,6 @@
 %reset
 #====================================>>>>> Genetic Algorithm
-
+import CNN
 import cv2
 %pylab inline
 import os
@@ -89,7 +89,7 @@ def fitness_fun(indiv_chrom):
     """
     #x = cv2.resize(indiv_chrom, dsize=(ROWS, COLS), interpolation=cv2.INTER_CUBIC)
     #x = np.expand_dims(indiv_chrom, axis=0) #test
-    #x = preprocess_input(x) #test
+    #x = CNN.preprocess_input(x) #test
 
     ## test
 
@@ -103,9 +103,9 @@ def fitness_fun(indiv_chrom):
     #img = image.load_img(img_path, target_size=(ROWS, COLS))
     x = image.img_to_array(img, "channels_last", "uint8")
     x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
+    x = CNN.preprocess_input(x)
 
-    preds = new_model.predict(x)
+    preds = CNN.new_model.predict(x)
 
     quality = preds[0,target_img_idx]
     
