@@ -113,7 +113,7 @@ def fitness_fun(indiv_chrom):
 
 def cal_pop_fitness(target_chrom, pop):
     """
-    This method calculates the fitness of all solutions in the population.
+    This function calculates the fitness of all solutions in the population.
     """
     qualities = np.zeros(len(pop))
     for indv_num in range(len(pop)):
@@ -180,7 +180,7 @@ def single_crossover(parents):
 def two_crossover(parents):
   '''
   Mating selected parents with a probability to happen
-  a random number is generated which will be used as a point which seperates
+  two random numbers are generated which will be used as points which seperates
   parents chromosomes in order to generate two offsprings
   '''
   two_points = sorted(random.sample(range(0,len(parents[0])), 2))
@@ -191,6 +191,7 @@ def two_crossover(parents):
 
   return offsprings
 
+# Uniform crossover
 def uni_crossover(parents):
   indexes = random.sample(range(0,len(parents[0])), int(len(parents[0])/2))
   sol1 = np.copy(parents[0])
