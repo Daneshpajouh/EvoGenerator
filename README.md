@@ -1,7 +1,7 @@
 # EvoGenerator
 # An Evolutionary Approach for Image Generation using Convolutional Neural Networks
 
-Image generation or image synthesis is the task of generating new images using machine learning techniques. Several successful applications of neural networks for image generation are proposed. [1] used deep neural networks to create high quality artistic images from arbitrary images given to it as input. In practice however, one of the most difficult types of image generation is that of generating meaningful images from scratch, i.e. starting with a random image and turning it into a meaningful one.
+Image generation or image synthesis is the task of generating new images using machine learning techniques. Several successful applications of neural networks for image generation are proposed. [1](https://arxiv.org/abs/1508.06576) used deep neural networks to create high quality artistic images from arbitrary images given to it as input. In practice however, one of the most difficult types of image generation is that of generating meaningful images from scratch, i.e. starting with a random image and turning it into a meaningful one.
 
 Convolutional Neural Networks (CNN) is known to be a powerful method for extracting relevant features from high-dimensional data, particularly from image data. CNN employs various filtering and pooling procedures to convert a high-resolution image with thousands if not millions of pixels into a much lower dimensional representation. Studies [2] have shown that CNNs extract high-level features in their initial layers while the later layers extract lower-level features, until before the very last fully-connected layers that end-up making the classification decision.
 
