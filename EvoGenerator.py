@@ -1,5 +1,23 @@
+%reset
+
 import GA
 import CNN
+import cv2
+%pylab inline
+import os
+import numpy as np
+import matplotlib.pyplot
+import matplotlib.image as mpimg
+from matplotlib import ticker
+import itertools
+import functools
+import operator
+import random
+import heapq
+import math
+import _pickle as cPickle
+from matplotlib.pyplot import imsave as isave
+from PIL import Image
 
 ROWS = 224
 COLS = 224
@@ -26,6 +44,7 @@ def main(target, n_individuals, num_generation, elitism, cross_prob, mut_prob, g
   # Creating an initial population randomly.
   new_population = np.array(GA.initial_population(img_shape=target, 
                                            n_individuals=GA.sol_per_pop))
+  
   # Defining 2 arrays for saving best and average solutions in each generation to use for plotting
   best_sol = []
   average_sol = []
@@ -72,12 +91,12 @@ def main(target, n_individuals, num_generation, elitism, cross_prob, mut_prob, g
 
         rand = random.random()
 
-        if GA.cross_prob > rand:
+        if cross_prob > rand:
           offspring = two_crossover((sel1, sel2))
-          if GA.mut_prob > rand:
+          if mut_prob > rand:
             offspring = np.array((mutation(offspring[0], gene_mutation, gene_range),
                                    mutation(offspring[1], gene_mutation, gene_range)))
-        elif GA.mut_prob > rand:
+        elif mut_prob > rand:
           offspring = np.array((mutation(sel1, gene_mutation, gene_range),
                                  mutation(sel2, gene_mutation, gene_range)))
         else:
@@ -93,7 +112,7 @@ def main(target, n_individuals, num_generation, elitism, cross_prob, mut_prob, g
       best_sol.append(np.amax(qualities))
       average_sol.append(np.mean(qualities))
 
-      #test
+      #test ( to be used in google colab )
       best_solution_chrom = new_population[numpy.where(qualities == np.max(qualities))[0][0]]
       data = GA.chromosome2img(best_solution_chrom, (ROWS , COLS, CHANNELS))
       GA.isave("file.jpg", data)
