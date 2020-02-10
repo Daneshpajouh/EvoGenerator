@@ -49,14 +49,14 @@ def change_model(model, new_input_shape=(None, ROWS, COLS, CHANNELS)):
 
     return new_model
 """
-"""
+
 new_model = DenseNet121(weights='imagenet')
 
 #new_model = change_model(model,new_input_shape=(None, ROWS, COLS, CHANNELS))
 #new_model.save(("/content/drive/My Drive/AI/my_model_"+str(ROWS)+"_"+str(COLS)+".h5"))
 
 new_model.summary()
-"""
+
 
 #new_model = load_model("/content/drive/My Drive/AI/my_model_224_224.h5")
 #new_model.summary()
