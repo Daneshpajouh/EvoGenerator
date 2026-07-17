@@ -32,8 +32,11 @@ jobs:
       - name: Execute frozen public linkage gate
         run: python research/hspc_sen_01g/run_hspc_gate.py
 
-      - name: Execute source-only PMC amendment
+      - name: Execute source-only PMC amendment A
         run: python research/hspc_sen_01g/run_pmc_amendment_a_v2.py
+
+      - name: Execute exhaustive workbook amendment B
+        run: python research/hspc_sen_01g/run_workbook_audit_b.py
 
       - name: Display immutable result files
         if: always()
@@ -41,7 +44,8 @@ jobs:
         run: |
           for directory in \
             research/hspc_sen_01g/results \
-            research/hspc_sen_01g/pmc_audit_results; do
+            research/hspc_sen_01g/pmc_audit_results \
+            research/hspc_sen_01g/workbook_audit_b_results; do
             if test -d "$directory"; then
               find "$directory" -maxdepth 1 -type f -print \
                 -exec sh -c 'echo "--- $1"; cat "$1"' _ {} \;
@@ -56,5 +60,6 @@ jobs:
           path: |
             research/hspc_sen_01g/results
             research/hspc_sen_01g/pmc_audit_results
+            research/hspc_sen_01g/workbook_audit_b_results
           if-no-files-found: warn
           retention-days: 90
