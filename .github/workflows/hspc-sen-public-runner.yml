@@ -33,7 +33,7 @@ jobs:
         run: python research/hspc_sen_01g/run_hspc_gate.py
 
       - name: Execute source-only PMC amendment
-        run: python research/hspc_sen_01g/run_pmc_amendment_a.py
+        run: python research/hspc_sen_01g/run_pmc_amendment_a_v2.py
 
       - name: Display immutable result files
         if: always()
