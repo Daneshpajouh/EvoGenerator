@@ -1,0 +1,61 @@
+name: Temporary public CAST-ATLAS-S0 gate
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - .github/workflows/cast-atlas-s0.yml
+      - research/cast_atlas_s0/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  execute-schema-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out frozen research branch
+        uses: actions/checkout@v4
+        with:
+          ref: research/cast-atlas-s0-2026-07-17
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned workbook dependency
+        run: python -m pip install --disable-pip-version-check openpyxl==3.1.5
+
+      - name: Verify preregistration binding and compile
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/cast_atlas_s0
+          sha256sum -c CAST_ATLAS_S0_PUBLIC_BINDING.sha256
+          cd ../..
+          python -m py_compile research/cast_atlas_s0/run_cast_atlas_s0.py
+
+      - name: Execute frozen source, schema, denominator, and power gate
+        run: python research/cast_atlas_s0/run_cast_atlas_s0.py
+
+      - name: Display immutable outputs
+        if: always()
+        shell: bash
+        run: |
+          if test -d research/cast_atlas_s0/results; then
+            find research/cast_atlas_s0/results -maxdepth 1 -type f -print \
+              -exec sh -c 'echo "--- $1"; cat "$1"' _ {} \;
+          fi
+
+      - name: Upload code and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cast-atlas-s0-${{ github.run_id }}-${{ github.run_attempt }}
+          path: research/cast_atlas_s0
+          if-no-files-found: error
+          retention-days: 90
