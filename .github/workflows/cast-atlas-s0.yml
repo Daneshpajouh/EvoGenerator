@@ -37,10 +37,12 @@ jobs:
           cd research/cast_atlas_s0
           sha256sum -c CAST_ATLAS_S0_PUBLIC_BINDING.sha256
           cd ../..
-          python -m py_compile research/cast_atlas_s0/run_cast_atlas_s0.py
+          python -m py_compile \
+            research/cast_atlas_s0/run_cast_atlas_s0.py \
+            research/cast_atlas_s0/run_cast_atlas_s0_amendment_a.py
 
-      - name: Execute frozen source, schema, denominator, and power gate
-        run: python research/cast_atlas_s0/run_cast_atlas_s0.py
+      - name: Execute gate under hash-frozen technical amendment A
+        run: python research/cast_atlas_s0/run_cast_atlas_s0_amendment_a.py
 
       - name: Display immutable outputs
         if: always()
