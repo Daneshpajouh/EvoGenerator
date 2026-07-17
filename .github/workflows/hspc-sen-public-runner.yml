@@ -32,20 +32,29 @@ jobs:
       - name: Execute frozen public linkage gate
         run: python research/hspc_sen_01g/run_hspc_gate.py
 
+      - name: Execute source-only PMC amendment
+        run: python research/hspc_sen_01g/run_pmc_amendment_a.py
+
       - name: Display immutable result files
         if: always()
         shell: bash
         run: |
-          if test -d research/hspc_sen_01g/results; then
-            find research/hspc_sen_01g/results -maxdepth 1 -type f -print \
-              -exec sh -c 'echo "--- $1"; cat "$1"' _ {} \;
-          fi
+          for directory in \
+            research/hspc_sen_01g/results \
+            research/hspc_sen_01g/pmc_audit_results; do
+            if test -d "$directory"; then
+              find "$directory" -maxdepth 1 -type f -print \
+                -exec sh -c 'echo "--- $1"; cat "$1"' _ {} \;
+            fi
+          done
 
       - name: Upload result artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: hspc-sen-01g-results-${{ github.run_id }}-${{ github.run_attempt }}
-          path: research/hspc_sen_01g/results
+          path: |
+            research/hspc_sen_01g/results
+            research/hspc_sen_01g/pmc_audit_results
           if-no-files-found: warn
           retention-days: 90
